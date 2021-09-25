@@ -1,0 +1,20 @@
+{
+  "name": "Mess-Manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Sshovon/Mess-Manager.git",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^4.1.2",
+    "mongoose": "^6.0.7",
+    "validator": "^13.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}
