@@ -53,7 +53,7 @@ const userSchema = new mongoose.Schema({
         type:String,
         default:'member'
     },
-    bazarCost:{
+    expanse:{
         type:Number,
         default:0,
     },
