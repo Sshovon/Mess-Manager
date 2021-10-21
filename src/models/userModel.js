@@ -63,7 +63,6 @@ const userSchema = new mongoose.Schema({
     dinnerList:{
         type:[dinnerSchema]
     },
-    schedule: Date,
 
 })
 

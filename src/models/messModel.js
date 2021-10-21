@@ -14,7 +14,33 @@ const messListSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    schedules:[{
+        name:{
+            type:String,
+        },
+        schedule:{
+            type: Date,
+        }
 
+        }
+    ],
+    members:[
+        {
+            email: {
+                type: String,
+                trim: true,
+                unique: true,
+                lowercase: true,
+        
+                validate(value){
+                    if(!validator.isEmail(value)){
+                        throw new Error ("Email is not an valid one!!!");
+                    }
+                }
+            }
+
+        }
+    ]
 
 
 })
