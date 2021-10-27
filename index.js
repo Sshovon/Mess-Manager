@@ -11,7 +11,6 @@ const signinRoutes = require('./src/routes/signinRoutes')
 const createMessRoutes = require('./src/routes/createMessRoutes');
 
 app.use(express.json()); ///this parses incoming jsons to object
-
 app.get('/', (req, res) => {
 
 })

@@ -8,20 +8,17 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
     try {
-        const messID = randomColor;
-        const mess = new Mess({
-            messID
-        })
+        const mess = new Mess()
 
         await mess.save();
-        res.status(200).send({messID})
+        res.status(200).send({mID: mess._id.str})
 
     }catch(e){
         res.status(400).send({e});
     }
 })
+
 
 
 module.exports = router;

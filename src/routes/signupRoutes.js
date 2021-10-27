@@ -1,6 +1,7 @@
 const express=  require('express');
 const router = express.Router();
 const User= require('../models/userModel')
+const Mess=require('../models/messModel')
 
 
 router.get('/',(req,res)=>{
@@ -15,13 +16,17 @@ router.post('/',async(req,res)=>{
         const password= req.body.password;
         const messID = req.body.messID;
         const role = req.body.role;
-        
+
         const user = new User({
             name,email,mobile,password,messID,role
         })
-
         await user.save();
-        res.status(200).send("success");
+        await Mess.updateOne({_id: user.messID},{
+            $push:{
+                members: user._id
+            }
+        })
+        res.status(200).send(user);
 
     }catch(e){
         res.status(400).send(e);

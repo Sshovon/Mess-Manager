@@ -2,10 +2,8 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 const messListSchema = new mongoose.Schema({
-    messID: {
-        type: String,
-        required: true,
-    },
+    messName: String,
+
     TotalExpanse: {
         type: Number,
         default: 0,
@@ -26,19 +24,8 @@ const messListSchema = new mongoose.Schema({
     ],
     members:[
         {
-            email: {
-                type: String,
-                trim: true,
-                unique: true,
-                lowercase: true,
-        
-                validate(value){
-                    if(!validator.isEmail(value)){
-                        throw new Error ("Email is not an valid one!!!");
-                    }
-                }
-            }
-
+            type: mongoose.Types.ObjectId,
+            ref: "User"
         }
     ]
 

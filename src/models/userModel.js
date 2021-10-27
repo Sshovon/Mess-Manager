@@ -45,10 +45,6 @@ const userSchema = new mongoose.Schema({
         trim:true,
         required:true,
     },
-    messID:{
-        type:String,
-        required:true
-    },
     role:{
         type:String,
         default:'member'
@@ -63,7 +59,9 @@ const userSchema = new mongoose.Schema({
     dinnerList:{
         type:[dinnerSchema]
     },
-
+    messID:{
+        type: mongoose.Types.ObjectId
+    }
 })
 
 const User = mongoose.model('User', userSchema)
