@@ -2,8 +2,10 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 
 const messListSchema = new mongoose.Schema({
-    messName: String,
-
+    messName: {
+        type: String,
+        required: true
+    },
     TotalExpanse: {
         type: Number,
         default: 0,

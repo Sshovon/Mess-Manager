@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
         const mess = new Mess()
 
         await mess.save();
-        res.status(200).send({mID: mess._id.str})
+        res.status(200).send({mID: mess._id.toString()})
 
     }catch(e){
         res.status(400).send({e});

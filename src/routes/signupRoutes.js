@@ -2,6 +2,7 @@ const express=  require('express');
 const router = express.Router();
 const User= require('../models/userModel')
 const Mess=require('../models/messModel')
+const bcryptjs = require("bcryptjs")
 
 
 router.get('/',(req,res)=>{
