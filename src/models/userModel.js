@@ -2,6 +2,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
 const bcryptjs = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const lunchSchema =  new mongoose.Schema({
     date:{
@@ -62,7 +63,15 @@ const userSchema = new mongoose.Schema({
     },
     messID:{
         type: mongoose.Types.ObjectId
-    }
+    },
+    tokens:[
+        {
+            token:{
+                type:String,
+                required:true
+            }
+        }
+    ]
 })
 
 /////// Instance Methods ////////
@@ -72,9 +81,17 @@ userSchema.methods.toJSON = function(){
     const userObject = user.toObject(); // converting mongoose document to plain js object
 
     delete userObject.password;
+    delete userObject.tokens;
     return userObject;
 }
 
+userSchema.methods.generateAuthToken = async function (){
+    const user = this;
+    const token = jwt.sign({_id:user._id}, process.env.JWT, {expiresIn: '12h'});
+    user.tokens = user.tokens.concat({token});
+    await user.save();
+    return token;
+}
 
 
 /////// Static Methods ////////

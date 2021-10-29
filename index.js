@@ -3,6 +3,7 @@ require('./src/db/mongoose') /// this ensures that mongoose.js run once and conn
 require('dotenv').config()
 const User = require('./src/models/userModel');
 const Mess = require('./src/models/messModel')
+const cookieParser = require('cookie-parser')
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -10,11 +11,11 @@ const port = process.env.PORT || 3000;
 const signupRoutes = require('./src/routes/signupRoutes')
 const signinRoutes = require('./src/routes/signinRoutes')
 const createMessRoutes = require('./src/routes/createMessRoutes');
+const auth = require('./src/middleware/auth')
 
 app.use(express.json()); ///this parses incoming jsons to object
-app.get('/', (req, res) => {
+app.use(cookieParser()) /// parses cookie
 
-})
 
 //signup routes
 app.use('/signup',signupRoutes);
@@ -24,6 +25,12 @@ app.use('/signin',signinRoutes);
 
 //create mess routes
 app.use('/createmess',createMessRoutes);
+
+
+
+app.get('/', auth ,(req, res) => {
+    res.send(req.user)
+})
 
 app.listen(port, () => {
     console.log(`Server isn running on port ${port}`)

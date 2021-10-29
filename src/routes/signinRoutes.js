@@ -13,10 +13,11 @@ router.post('/',async(req,res)=>{
     try{
         const user= await User.verifyCredentials(req.body.email,req.body.password);
         if(!user) throw new Error("Credentials doesn't match")
+        const token = await user.generateAuthToken();
+        res.cookie('token', token);
         res.send(user);
     }catch(e){
-        console.log(e);
-        res.send(e)
+        res.status(400).send(e)
     }
 
 })
