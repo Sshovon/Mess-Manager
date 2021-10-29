@@ -4,23 +4,36 @@ const validator = require('validator')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const lunchSchema =  new mongoose.Schema({
-    date:{
-        type:String,
-        required:true,
-}})
+const lunchSchema = new mongoose.Schema({
+    date: {
+        type: String,
+        required: true,
+    },
+    meal: {
+        type: Boolean,
+        required: true
+
+    }
+})
 
 const dinnerSchema = new mongoose.Schema({
-    date:{
-        type:String,
-        required:true,
-}})
+    date: {
+        type: String,
+        required: true,
+    },
+    meal: {
+        type: Boolean,
+        required: true
+
+    }
+
+})
 
 const userSchema = new mongoose.Schema({
-    name:{
-        type:String,
+    name: {
+        type: String,
         required: true,
-        trim: true 
+        trim: true
     },
     email: {
         type: String,
@@ -29,46 +42,46 @@ const userSchema = new mongoose.Schema({
         unique: true,
         lowercase: true,
 
-        validate(value){
-            if(!validator.isEmail(value)){
-                throw new Error ("Email is not an valid one!!!");
+        validate(value) {
+            if (!validator.isEmail(value)) {
+                throw new Error("Email is not an valid one!!!");
             }
         }
     },
-    mobile:{
+    mobile: {
         type: String,
         minlength: 11,
-        trim:true,
-        required:true,
+        trim: true,
+        required: true,
     },
-    password:{
-        type:String,
-        minlength:6,
-        trim:true,
-        required:true,
+    password: {
+        type: String,
+        minlength: 6,
+        trim: true,
+        required: true,
     },
-    role:{
-        type:String,
-        default:'member'
+    role: {
+        type: String,
+        default: 'member'
     },
-    expanse:{
-        type:Number,
-        default:0,
+    expanse: {
+        type: Number,
+        default: 0,
     },
-    lunchList:{
+    lunchList: {
         type: [lunchSchema]
     },
-    dinnerList:{
-        type:[dinnerSchema]
+    dinnerList: {
+        type: [dinnerSchema]
     },
-    messID:{
+    messID: {
         type: mongoose.Types.ObjectId
     },
-    tokens:[
+    tokens: [
         {
-            token:{
-                type:String,
-                required:true
+            token: {
+                type: String,
+                required: true
             }
         }
     ]
@@ -76,8 +89,8 @@ const userSchema = new mongoose.Schema({
 
 /////// Instance Methods ////////
 
-userSchema.methods.toJSON = function(){
-    const user= this;
+userSchema.methods.toJSON = function () {
+    const user = this;
     const userObject = user.toObject(); // converting mongoose document to plain js object
 
     delete userObject.password;
@@ -85,10 +98,10 @@ userSchema.methods.toJSON = function(){
     return userObject;
 }
 
-userSchema.methods.generateAuthToken = async function (){
+userSchema.methods.generateAuthToken = async function () {
     const user = this;
-    const token = jwt.sign({_id:user._id}, process.env.JWT, {expiresIn: '12h'});
-    user.tokens = user.tokens.concat({token});
+    const token = jwt.sign({ _id: user._id }, process.env.JWT, { expiresIn: '12h' });
+    user.tokens = user.tokens.concat({ token });
     await user.save();
     return token;
 }
@@ -96,23 +109,23 @@ userSchema.methods.generateAuthToken = async function (){
 
 /////// Static Methods ////////
 
-userSchema.statics.verifyCredentials = async function(email,password){
-    const user= await User.findOne({email})
-    if(!user) 
+userSchema.statics.verifyCredentials = async function (email, password) {
+    const user = await User.findOne({ email })
+    if (!user)
         throw new Error("Invalid credentials")
-    
-    const isMatch=  await bcryptjs.compare(password, user.password)
-    if(!isMatch)
+
+    const isMatch = await bcryptjs.compare(password, user.password)
+    if (!isMatch)
         throw new Error("Invalid credentials")
     return user;
 }
 
 /////// Middleware ///////
 
-userSchema.pre('save', async function(){
+userSchema.pre('save', async function () {
     const user = this;
-    if(user.isModified("password")){
-        user.password=await bcryptjs.hash(user.password,8);
+    if (user.isModified("password")) {
+        user.password = await bcryptjs.hash(user.password, 8);
     }
 })
 

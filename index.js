@@ -8,10 +8,11 @@ const cookieParser = require('cookie-parser')
 const app = express();
 const port = process.env.PORT || 3000;
 
+const auth = require('./src/middleware/auth')
 const signupRoutes = require('./src/routes/signupRoutes')
 const signinRoutes = require('./src/routes/signinRoutes')
 const createMessRoutes = require('./src/routes/createMessRoutes');
-const auth = require('./src/middleware/auth')
+const managerRoutes = require('./src/routes/managerRoutes') 
 
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
@@ -25,6 +26,12 @@ app.use('/signin',signinRoutes);
 
 //create mess routes
 app.use('/createmess',createMessRoutes);
+
+//manager routes
+app.use('/manager',managerRoutes);
+
+//member routes
+
 
 
 
