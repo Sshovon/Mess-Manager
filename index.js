@@ -1,5 +1,6 @@
 const express = require('express')
 require('./src/db/mongoose') /// this ensures that mongoose.js run once and connects to database
+require('dotenv').config()
 const User = require('./src/models/userModel');
 const Mess = require('./src/models/messModel')
 
@@ -25,6 +26,6 @@ app.use('/signin',signinRoutes);
 app.use('/createmess',createMessRoutes);
 
 app.listen(port, () => {
-    console.log("Server running")
+    console.log(`Server isn running on port ${port}`)
 })
 

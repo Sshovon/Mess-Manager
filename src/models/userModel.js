@@ -67,6 +67,13 @@ const userSchema = new mongoose.Schema({
 
 /////// Instance Methods ////////
 
+userSchema.methods.toJSON = function(){
+    const user= this;
+    const userObject = user.toObject(); // converting mongoose document to plain js object
+
+    delete userObject.password;
+    return userObject;
+}
 
 
 
@@ -77,7 +84,7 @@ userSchema.statics.verifyCredentials = async function(email,password){
     if(!user) 
         throw new Error("Invalid credentials")
     
-    const isMatch= bcryptjs.compare(password,user.password)
+    const isMatch=  await bcryptjs.compare(password, user.password)
     if(!isMatch)
         throw new Error("Invalid credentials")
     return user;
@@ -91,8 +98,6 @@ userSchema.pre('save', async function(){
         user.password=await bcryptjs.hash(user.password,8);
     }
 })
-
-
 
 const User = mongoose.model('User', userSchema)
 module.exports = User;
