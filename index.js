@@ -13,6 +13,7 @@ const signupRoutes = require('./src/routes/signupRoutes')
 const signinRoutes = require('./src/routes/signinRoutes')
 const createMessRoutes = require('./src/routes/createMessRoutes');
 const managerRoutes = require('./src/routes/managerRoutes') 
+const memberRoutes=require('./src/routes/memberRoutes')
 
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
@@ -31,7 +32,7 @@ app.use('/createmess',createMessRoutes);
 app.use('/manager',managerRoutes);
 
 //member routes
-
+app.use('/member',memberRoutes);
 
 
 

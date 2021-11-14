@@ -75,7 +75,7 @@ const userSchema = new mongoose.Schema({
         type: [dinnerSchema]
     },
     messID: {
-        type: mongoose.Types.ObjectId
+        type: mongoose.Types.ObjectId,
     },
     tokens: [
         {

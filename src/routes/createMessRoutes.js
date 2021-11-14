@@ -9,7 +9,8 @@ router.get('/', (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const mess = new Mess()
+        const messName= req.body.messName;
+        const mess = new Mess({messName})
 
         await mess.save();
         res.status(200).send({mID: mess._id.toString()})
