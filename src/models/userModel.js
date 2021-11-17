@@ -64,7 +64,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'member'
     },
-    expanse: {
+    expense: {
         type: Number,
         default: 0,
     },
@@ -82,6 +82,19 @@ const userSchema = new mongoose.Schema({
             token: {
                 type: String,
                 required: true
+            }
+        }
+    ],
+    expenses:[
+        {
+            expense:{
+                type:Number,
+                required: true,
+            },
+            description: String,
+            date: {
+                type: String,
+                default: new Date().toLocaleDateString()
             }
         }
     ]

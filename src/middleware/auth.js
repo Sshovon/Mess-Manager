@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken")
 const User =  require('../models/userModel');
+const Mess = require('../models/messModel')
 
 const auth = async (req,res,next)=>{
     try{
@@ -7,7 +8,10 @@ const auth = async (req,res,next)=>{
         const decoded = jwt.verify(token,process.env.JWT);
         const user = await User.find({_id:decoded._id , "tokens.token" : token })
         if(!user) throw new Error();
-        req.user = user;
+        const mess= await Mess.find({_id:user[0].messID});
+        req.user = user[0];
+        req.mess=mess[0];
+        if(!mess) throw new Error();
         next()
 
     }catch(e){

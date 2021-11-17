@@ -6,11 +6,11 @@ const messListSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    TotalExpanse: {
+    totalExpense: {
         type: Number,
         default: 0,
     },
-    TotalMeal: {
+    totalMeal: {
         type: Number,
         default: 0,
     },
@@ -28,6 +28,24 @@ const messListSchema = new mongoose.Schema({
         {
             type: mongoose.Types.ObjectId,
             ref: "User"
+        }
+    ],
+    expenses:[
+        {
+            expense:{
+                type:Number,
+                required: true,
+            },
+            description: String,
+            spender:{
+                type: mongoose.Types.ObjectId,
+                required: true,
+            },
+            date: {
+                type: String,
+                default: new Date().toLocaleDateString()
+            }
+            
         }
     ]
 

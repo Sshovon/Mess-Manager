@@ -40,10 +40,44 @@ router.post('/addmeal',[auth,roleChecker],async (req,res)=>{
     }
 })
 
+router.get('/addexpense',async(req,res)=>{
+    try{
+        res.send('render addexpense page')
 
+    }catch(e){
 
+    }
+})
+ router.post('/addexpense',auth,async(req,res)=>{
+    try{
+        //console.log(req.mess)
+        const {expense,description} = req.body;
+        const spender = req.user._id;
+        const newExpense=req.mess.totalExpense+expense;
 
+        await Mess.updateOne({_id:req.mess._id},{
+            $push:{
+                expenses:{
+                    expense,description,spender
+                }
+            }
+        })
+        await Mess.updateOne({_id:req.mess._id},{totalExpense:newExpense});
+        
+        await User.updateOne({_id:req.user._id},{expense: req.user.expense+expense});
+        await User.updateOne({_id:req.user._id},{
+            $push:{
+                expenses:{
+                    expense,description
+                }
+            }
+        })
+        res.send("success");
 
+    }catch(e){
+        res.send("error")
+    }
+})
 
 
 
