@@ -9,11 +9,12 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const auth = require('./src/middleware/auth')
+const ownerChecker = require('./src/middleware/ownerChecker');
 const signupRoutes = require('./src/routes/signupRoutes')
 const signinRoutes = require('./src/routes/signinRoutes')
 const createMessRoutes = require('./src/routes/createMessRoutes');
 const managerRoutes = require('./src/routes/managerRoutes') 
-const memberRoutes=require('./src/routes/memberRoutes')
+const memberRoutes=require('./src/routes/memberRoutes');
 
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
@@ -36,7 +37,7 @@ app.use('/member',memberRoutes);
 
 
 
-app.get('/', auth ,(req, res) => {
+app.get('/', [auth,ownerChecker] ,(req, res) => {
     res.send(req.user)
 })
 

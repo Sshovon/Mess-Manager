@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/auth')
+const ownerChecker = require('../middleware/ownerChecker')
 const User = require('../models/userModel')
 const Mess = require('../models/messModel')
 
@@ -61,8 +62,7 @@ router.post('/addexpense', auth, async (req, res) => {
         res.send("error")
     }
 })
-
-router.patch('/updateexpense/:id', auth, async (req, res) => {
+router.patch('/updateexpense/:id', [auth,ownerChecker], async (req, res) => {
     try {
         const r1 = await User.findOneAndUpdate({ "expenses._id": req.params.id },
             {
@@ -90,7 +90,7 @@ router.patch('/updateexpense/:id', auth, async (req, res) => {
 })
 
 
-router.delete("/deleteexpense/:id", auth, async (req, res) => {
+router.delete("/deleteexpense/:id", [auth,ownerChecker], async (req, res) => {
     try{
         
         req.user.expenses= req.user.expenses.filter((expense)=>{
