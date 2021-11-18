@@ -52,6 +52,21 @@ const messListSchema = new mongoose.Schema({
 
 })
 
+/// Instance Methods ////
+messListSchema.methods.updateExpense= async function(){
+    const mess= this;
+    //const messObject=mess.toObject();
+    let messTotalExpense=0;
+    const messExpenses=mess.expenses;
+    
+    for(let i=0;i<messExpenses.length;i++){
+        messTotalExpense+=messExpenses[i].expense;
+    }
+    mess.totalExpense=messTotalExpense;
+    await mess.save()
+
+}
+
 const messList = mongoose.model('MessList', messListSchema)
 
 module.exports = messList;

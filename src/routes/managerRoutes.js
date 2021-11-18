@@ -63,7 +63,6 @@ router.get('/addexpense',async(req,res)=>{
             }
         })
         await Mess.updateOne({_id:req.mess._id},{totalExpense:newExpense});
-        
         await User.updateOne({_id:req.user._id},{expense: req.user.expense+expense});
         await User.updateOne({_id:req.user._id},{
             $push:{
@@ -78,7 +77,6 @@ router.get('/addexpense',async(req,res)=>{
         res.send("error")
     }
 })
-
 
 
 module.exports = router;

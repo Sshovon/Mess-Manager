@@ -13,7 +13,7 @@ const auth = async (req,res,next)=>{
         req.mess=mess[0];
         if(!mess) throw new Error();
         next()
-
+        
     }catch(e){
         res.status(400).send({error : "Please Authenticate"});
     }

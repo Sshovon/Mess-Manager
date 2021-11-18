@@ -119,6 +119,20 @@ userSchema.methods.generateAuthToken = async function () {
     return token;
 }
 
+userSchema.methods.updateExpense= async function(){
+    const user= this;
+    let userTotalExpense=0;
+    const userExpenses=user.expenses;
+    
+    for(let i=0;i<userExpenses.length;i++){
+        userTotalExpense+=userExpenses[i].expense;
+    }
+    user.expense=userTotalExpense;
+    await user.save()
+
+}
+
+
 
 /////// Static Methods ////////
 
