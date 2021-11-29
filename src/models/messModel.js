@@ -14,30 +14,29 @@ const messListSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    schedules:[{
-        name:{
-            type:String,
+    schedules: [{
+        name: {
+            type: String,
         },
-        schedule:{
+        schedule: {
             type: Date,
         }
-
-        }
+    }
     ],
-    members:[
+    members: [
         {
             type: mongoose.Types.ObjectId,
             ref: "User"
         }
     ],
-    expenses:[
+    expenses: [
         {
-            expense:{
-                type:Number,
+            expense: {
+                type: Number,
                 required: true,
             },
             description: String,
-            spender:{
+            spender: {
                 type: mongoose.Types.ObjectId,
                 required: true,
             },
@@ -45,7 +44,21 @@ const messListSchema = new mongoose.Schema({
                 type: String,
                 default: new Date().toLocaleDateString()
             }
-            
+
+        }
+    ],
+    mealList:[
+        {
+            date:[
+                {
+                    name:String,
+                    breakfast:Number,
+                    lunch:Number,
+                    dinner:Number,
+                    ownerID:mongoose.Types.ObjectId
+                }
+
+            ]
         }
     ]
 
@@ -53,16 +66,16 @@ const messListSchema = new mongoose.Schema({
 })
 
 /// Instance Methods ////
-messListSchema.methods.updateExpense= async function(){
-    const mess= this;
+messListSchema.methods.updateExpense = async function () {
+    const mess = this;
     //const messObject=mess.toObject();
-    let messTotalExpense=0;
-    const messExpenses=mess.expenses;
-    
-    for(let i=0;i<messExpenses.length;i++){
-        messTotalExpense+=messExpenses[i].expense;
+    let messTotalExpense = 0;
+    const messExpenses = mess.expenses;
+
+    for (let i = 0; i < messExpenses.length; i++) {
+        messTotalExpense += messExpenses[i].expense;
     }
-    mess.totalExpense=messTotalExpense;
+    mess.totalExpense = messTotalExpense;
     await mess.save()
 
 }

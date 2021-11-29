@@ -23,17 +23,12 @@ router.get('/addmeal',[auth,roleChecker],(req,res)=>{
 })
 
 
+
+
 router.post('/addmeal',[auth,roleChecker],async (req,res)=>{
     try{
-        const user = req.user[0];
-        user.lunchList = user.lunchList.concat({
-            date: new Date(Date.now()).toUTCString(),
-            meal: true
-        })
-        await user.save();
-        const today = user.lunchList[user.lunchList.length-1].date
-        res.send({today})
-
+        const user = req.user;
+        
     }catch(e){
         res.send("failed")
 
