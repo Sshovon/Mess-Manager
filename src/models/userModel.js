@@ -143,7 +143,6 @@ userSchema.statics.verifyCredentials = async function (email, password) {
     const user = await User.findOne({ email })
     if (!user)
         throw new Error("Invalid credentials")
-
     const isMatch = await bcryptjs.compare(password, user.password)
     if (!isMatch)
         throw new Error("Invalid credentials")
