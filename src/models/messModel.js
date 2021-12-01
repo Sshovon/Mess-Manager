@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const validator = require('validator')
+const uniqueValidator = require('mongoose-unique-validator')
+
 
 const messListSchema = new mongoose.Schema({
     messName: {
@@ -49,7 +51,12 @@ const messListSchema = new mongoose.Schema({
     ],
     mealList:[
         {
-            date:[
+            date:{
+                type:String,
+                required:true,
+                unique:true
+            },
+            dailyList:[
                 {
                     name:String,
                     breakfast:Number,
@@ -65,6 +72,10 @@ const messListSchema = new mongoose.Schema({
 
 })
 
+/// pluging////
+//messListSchema.plugin(uniqueValidator);
+
+
 /// Instance Methods ////
 messListSchema.methods.updateExpense = async function () {
     const mess = this;
@@ -77,6 +88,15 @@ messListSchema.methods.updateExpense = async function () {
     }
     mess.totalExpense = messTotalExpense;
     await mess.save()
+
+}
+
+messListSchema.methods.updateMealList = async function(date,dailyList,newMealCount){
+    const mess=this;
+    mess.totalMeal += newMealCount;
+    mess.mealList=mess.mealList.filter(element=>element.date != date);
+    mess.mealList=mess.mealList.concat({date,dailyList});
+    await mess.save();
 
 }
 

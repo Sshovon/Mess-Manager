@@ -4,30 +4,30 @@ const validator = require('validator')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
-const lunchSchema = new mongoose.Schema({
-    date: {
-        type: String,
-        required: true,
-    },
-    meal: {
-        type: Boolean,
-        required: true
+// const lunchSchema = new mongoose.Schema({
+//     date: {
+//         type: String,
+//         required: true,
+//     },
+//     meal: {
+//         type: Boolean,
+//         required: true
 
-    }
-})
+//     }
+// })
 
-const dinnerSchema = new mongoose.Schema({
-    date: {
-        type: String,
-        required: true,
-    },
-    meal: {
-        type: Boolean,
-        required: true
+// const dinnerSchema = new mongoose.Schema({
+//     date: {
+//         type: String,
+//         required: true,
+//     },
+//     meal: {
+//         type: Boolean,
+//         required: true
 
-    }
+//     }
 
-})
+// })
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -68,12 +68,16 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    lunchList: {
-        type: [lunchSchema]
+    totalMeal:{
+        type:Number,
+        default:0
     },
-    dinnerList: {
-        type: [dinnerSchema]
-    },
+    // lunchList: {
+    //     type: [lunchSchema]
+    // },
+    // dinnerList: {
+    //     type: [dinnerSchema]
+    // },
     messID: {
         type: mongoose.Types.ObjectId,
     },
@@ -133,7 +137,6 @@ userSchema.methods.updateExpense= async function(){
 }
 
 
-
 /////// Static Methods ////////
 
 userSchema.statics.verifyCredentials = async function (email, password) {
@@ -145,6 +148,31 @@ userSchema.statics.verifyCredentials = async function (email, password) {
     if (!isMatch)
         throw new Error("Invalid credentials")
     return user;
+}
+
+
+userSchema.statics.doCount=async function (dailyList) {
+    let totalMeal=0;
+    for (const element of dailyList) {
+        const user = await User.findOne({ _id: element.ownerID })
+        const count = element.breakfast + element.lunch + element.dinner;
+        user.totalMeal += count;
+        totalMeal += count;
+        await user.save();
+    }
+    return totalMeal;
+}
+
+userSchema.statics.updateDoCount= async function(dailyList){
+    let totalMeal=0;
+    for (const element of dailyList) {
+        const user = await User.findOne({ _id: element.ownerID })
+        const count = element.breakfast + element.lunch + element.dinner;
+        user.totalMeal -= count;
+        totalMeal += count;
+        await user.save();
+    }
+    return totalMeal;
 }
 
 /////// Middleware ///////
