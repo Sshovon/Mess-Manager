@@ -70,6 +70,22 @@ const messListSchema = new mongoose.Schema({
 
             ]
         }
+    ],
+    bulletinBoard:[
+        {
+            itemName:String,
+            itemQuantity:String,
+            addedBy:mongoose.Types.ObjectId,
+            addedTime:{
+                type:String,
+                default:new Date().toLocaleString()
+            },
+            done:{
+                type:Boolean,
+                default:false
+            }
+
+        }
     ]
 
 

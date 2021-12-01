@@ -15,6 +15,7 @@ const signinRoutes = require('./src/routes/signinRoutes')
 const createMessRoutes = require('./src/routes/createMessRoutes');
 const managerRoutes = require('./src/routes/managerRoutes') 
 const memberRoutes=require('./src/routes/memberRoutes');
+const allRoutes = require('./src/routes/allRoutes')
 
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
@@ -35,6 +36,8 @@ app.use('/manager',managerRoutes);
 //member routes
 app.use('/member',memberRoutes);
 
+//common routes
+app.use('/all',allRoutes);
 
 
 app.get('/', [auth,ownerChecker] ,(req, res) => {

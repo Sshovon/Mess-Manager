@@ -7,23 +7,6 @@ const User = require('../models/userModel');
 const Mess = require('../models/messModel')
 
 
-router.get('/', [auth, roleChecker], (req, res) => {
-    try {
-        res.send("manager says hi")
-
-    } catch (e) {
-        res.send(e);
-    }
-})
-
-router.get('/addmeal', [auth, roleChecker], (req, res) => {
-    try {
-        res.send('meal add page');
-    } catch (e) {
-
-    }
-})
-
 router.post('/addmeal', [auth, roleChecker], async (req, res) => {
     try {
         const { date, dailyList } = req.body;
@@ -45,7 +28,8 @@ router.post('/addmeal', [auth, roleChecker], async (req, res) => {
         res.send("success")
 
     } catch (e) {
-        res.send(e.message)
+        const error=e.message
+        res.send({error})
     }
 })
 
