@@ -4,7 +4,7 @@ require('dotenv').config()
 const User = require('./src/models/userModel');
 const Mess = require('./src/models/messModel')
 const cookieParser = require('cookie-parser')
-
+const cors= require('cors')
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -18,7 +18,7 @@ const memberRoutes=require('./src/routes/memberRoutes');
 
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
-
+app.use(cors())
 
 //signup routes
 app.use('/signup',signupRoutes);
