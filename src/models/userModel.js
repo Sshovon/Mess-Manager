@@ -160,6 +160,7 @@ userSchema.statics.doCount=async function (dailyList) {
         totalMeal += count;
         await user.save();
     }
+    console.log(totalMeal)
     return totalMeal;
 }
 
@@ -185,4 +186,5 @@ userSchema.pre('save', async function () {
 })
 
 const User = mongoose.model('User', userSchema)
+
 module.exports = User;

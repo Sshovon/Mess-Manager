@@ -16,6 +16,10 @@ const messListSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    mealCost:{
+        type:Number,
+        default:0
+    },
     schedules: [{
         name: {
             type: String,
@@ -99,6 +103,15 @@ messListSchema.methods.updateMealList = async function(date,dailyList,newMealCou
     await mess.save();
 
 }
+
+
+messListSchema.methods.generateMealCost= async function(){
+    const mess= this;
+    mess.mealCost=(mess.totalExpense/mess.totalMeal);
+    await mess.save();
+} 
+
+//// statics methods 
 
 const messList = mongoose.model('MessList', messListSchema)
 

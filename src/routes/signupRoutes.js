@@ -19,6 +19,9 @@ router.post('/',async(req,res)=>{
         // const role = req.body.role;
 
         const {name,email,mobile,password,messID,role} = req.body;
+        const exists=await User.find({email});
+        if(exists.length)
+            throw new Error("Email already exists");
         const user = new User({
             name,email,mobile,password,messID,role
         })
@@ -31,7 +34,7 @@ router.post('/',async(req,res)=>{
         res.status(200).send(user);
 
     }catch(e){
-        res.status(400).send(e);
+        res.status(400).send(e.message);
     }
     
 })

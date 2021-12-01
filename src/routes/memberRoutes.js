@@ -6,6 +6,7 @@ const User = require('../models/userModel')
 const Mess = require('../models/messModel')
 
 
+
 router.post('/showall', async (req, res) => {
     try {
         const messID = req.body.messID;
@@ -44,10 +45,9 @@ router.post('/addexpense', auth, async (req, res) => {
                     expense, description, spender
                 }
             }
-        })
+        },{new:true})
         const _id = updatedExpense.expenses[updatedExpense.expenses.length - 1]._id
-
-        await Mess.updateOne({ _id: req.mess._id }, { totalExpense: newExpense });
+        req.mess.totalExpense+=expense;
         await User.updateOne({ _id: req.user._id }, { expense: req.user.expense + expense });
         await User.updateOne({ _id: req.user._id }, {
             $push: {
@@ -56,12 +56,16 @@ router.post('/addexpense', auth, async (req, res) => {
                 }
             }
         })
+        //checked ok
+        await req.mess.generateMealCost();
         res.send(_id);
 
     } catch (e) {
         res.send("error")
     }
 })
+//checking here
+//generateMealCost not working properly
 router.patch('/updateexpense/:id', [auth,ownerChecker], async (req, res) => {
     try {
         const r1 = await User.findOneAndUpdate({ "expenses._id": req.params.id },
@@ -72,7 +76,6 @@ router.patch('/updateexpense/:id', [auth,ownerChecker], async (req, res) => {
                 }
             }, { new: true })
         r1.updateExpense();
-
         const r2 = await Mess.findOneAndUpdate({ "expenses._id": req.params.id },
             {
                 $set: {
@@ -80,15 +83,14 @@ router.patch('/updateexpense/:id', [auth,ownerChecker], async (req, res) => {
                     "expenses.$.expense": req.body.expense
                 }
             }, { new: true })
-
         r2.updateExpense();
+        await req.mess.generateMealCost();
         res.send({ r1, r2 })
 
     } catch (e) {
         res.send('error');
     }
 })
-
 
 router.delete("/deleteexpense/:id", [auth,ownerChecker], async (req, res) => {
     try{
@@ -102,14 +104,16 @@ router.delete("/deleteexpense/:id", [auth,ownerChecker], async (req, res) => {
         req.mess.expenses= req.mess.expenses.filter((expense)=>{
             return expense._id.toString() != req.params.id
         })
-        await req.mess.save();
-        req.mess.updateExpense();
+        //await req.mess.save();
+        await req.mess.updateExpense();
+        //checked working well
+        await req.mess.generateMealCost();
+        
         res.send("success")
 
     }catch(e){
         res.send("error");
     }
 })
-
 
 module.exports = router
