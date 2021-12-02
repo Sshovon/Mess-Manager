@@ -25,7 +25,10 @@ const summaryRoutes=require('./src/routes/summaryRoutes');
 
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
-app.use(cors())
+app.use(cors({
+    credentials:true,
+    origin:true
+}))
 
 //signup routes
 app.use('/signup',signupRoutes);

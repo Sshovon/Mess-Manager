@@ -11,9 +11,9 @@ router.post('/', auth, async(req, res) => {
     try {
 
         const [user] = await User.find({ _id: req.user._id });
-        const cookieToken = req.cookies.token;
+        const cookieToken = req.body.token;
         user.tokens = user.tokens.filter(token => cookieToken != token.token)
-        res.cookies('token',""),
+        res.cookie('token',""),
         res.user=""
         res.mess=""
         await user.save();

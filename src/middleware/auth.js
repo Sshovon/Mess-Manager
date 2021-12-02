@@ -4,7 +4,7 @@ const Mess = require('../models/messModel')
 
 const auth = async (req,res,next)=>{
     try{
-        const token = req.cookies.token;
+        const token = req.body.token;
         const decoded = jwt.verify(token,process.env.JWT);
         const user = await User.find({_id:decoded._id , "tokens.token" : token })
         if(!user) throw new Error();
