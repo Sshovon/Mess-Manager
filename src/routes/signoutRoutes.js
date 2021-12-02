@@ -7,15 +7,15 @@ const Mess = require('../models/messModel')
 const { route } = require('./memberRoutes')
 
 
-router.post('/', auth, async (req, res) => {
+router.post('/', auth, async(req, res) => {
     try {
 
         const [user] = await User.find({ _id: req.user._id });
         const cookieToken = req.cookies.token;
         user.tokens = user.tokens.filter(token => cookieToken != token.token)
-        req.cookies.token="",
-        req.user=""
-        req.mess=""
+        res.cookies('token',""),
+        res.user=""
+        res.mess=""
         await user.save();
         res.send({result:"success"})
 
