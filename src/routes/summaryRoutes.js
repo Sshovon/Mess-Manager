@@ -5,7 +5,7 @@ const ownerChecker = require('../middleware/ownerChecker')
 const User = require('../models/userModel')
 const Mess = require('../models/messModel')
 
-router.get('/short',auth,async(req,res)=>{
+router.post('/short',auth,async(req,res)=>{
     try{
         res.send({
             messName:req.mess.messName,
@@ -18,7 +18,7 @@ router.get('/short',auth,async(req,res)=>{
     }
 })
 
-router.get('/meal',auth,async(req,res)=>{
+router.post('/meal',auth,async(req,res)=>{
     try{
         const messID = req.mess._id;
         const [users] = await Mess.find({ _id: messID }).populate('members')
@@ -42,7 +42,7 @@ router.get('/meal',auth,async(req,res)=>{
     }
 })
 
-router.get('/balance',auth,async(req,res)=>{
+router.post('/balance',auth,async(req,res)=>{
     try{
         const messID = req.mess._id;
         const [users] = await Mess.find({ _id: messID }).populate('members')
