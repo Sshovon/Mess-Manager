@@ -3,12 +3,9 @@ const router = express.Router();
 const Mess = require('../models/messModel');
 
 
-router.get('/', (req, res) => {
-    res.send("mess created");
-})
-
 router.post('/', async (req, res) => {
     try {
+        console.log('creating mess')
         const messName= req.body.messName;
         const mess = new Mess({messName})
 

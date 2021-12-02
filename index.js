@@ -15,7 +15,11 @@ const signinRoutes = require('./src/routes/signinRoutes')
 const createMessRoutes = require('./src/routes/createMessRoutes');
 const managerRoutes = require('./src/routes/managerRoutes') 
 const memberRoutes=require('./src/routes/memberRoutes');
-const allRoutes = require('./src/routes/allRoutes')
+const bulletinRoutes = require('./src/routes/bulletinRoutes')
+const expenseRoutes = require('./src/routes/expenseRoutes');
+const roleChecker = require('./src/middleware/roleChecker');
+const mealRoutes=require('./src/routes/mealRoutes');
+const signoutRoutes=require('./src/routes/signoutRoutes');
 
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
@@ -30,14 +34,17 @@ app.use('/signin',signinRoutes);
 //create mess routes
 app.use('/createmess',createMessRoutes);
 
-//manager routes
-app.use('/manager',managerRoutes);
+//expense routes
+app.use('/expense',expenseRoutes)
 
-//member routes
-app.use('/member',memberRoutes);
+//bulletin routes
+app.use('/bulletin',bulletinRoutes);
 
-//common routes
-app.use('/all',allRoutes);
+//meal routes
+app.use('/meal',mealRoutes);
+
+//signout routes
+app.use('/signout',signoutRoutes);
 
 
 app.get('/', [auth,ownerChecker] ,(req, res) => {

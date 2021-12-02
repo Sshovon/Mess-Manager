@@ -5,12 +5,9 @@ const ownerChecker = require('../middleware/ownerChecker')
 const User = require('../models/userModel')
 const Mess = require('../models/messModel')
 
-router.get('/', async (req, res) => {
-    res.send("from all")
-})
 
 
-router.post('/addbulletin', auth, async (req, res) => {
+router.post('/add', auth, async (req, res) => {
     try {
         const { itemName, itemQuantity } = req.body;
         req.mess.bulletinBoard = req.mess.bulletinBoard.concat({
@@ -27,7 +24,7 @@ router.post('/addbulletin', auth, async (req, res) => {
     }
 })
 
-router.patch('/donebulletin/:id', auth, async (req, res) => {
+router.patch('/done/:id', auth, async (req, res) => {
     try {
         const bulletinBoardArray = req.mess.bulletinBoard;
         const index = bulletinBoardArray.findIndex(obj => {
@@ -42,7 +39,7 @@ router.patch('/donebulletin/:id', auth, async (req, res) => {
     }
 })
 
-router.delete('/deletebulletin/:id', auth, async (req, res) => {
+router.delete('/delete/:id', auth, async (req, res) => {
     try {
         req.mess.bulletinBoard=req.mess.bulletinBoard.filter(obj => obj._id.toString() != req.params.id);
         await req.mess.save();
