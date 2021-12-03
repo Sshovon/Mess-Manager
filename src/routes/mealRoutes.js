@@ -8,6 +8,21 @@ const Mess = require('../models/messModel')
 
 
 
+
+
+router.post('/show', auth, async (req, res) => {
+    try {
+        const {date}=req.body
+        const dailyList=req.mess.mealList.filter(element=>element.date===date);
+        res.send(dailyList)
+
+    } catch (e) {
+        const error=e.message
+        res.send({error})
+    }
+})
+
+
 router.post('/add', [auth, roleChecker], async (req, res) => {
     try {
         const { date, dailyList } = req.body;

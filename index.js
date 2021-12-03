@@ -14,7 +14,7 @@ const signupRoutes = require('./src/routes/signupRoutes')
 const signinRoutes = require('./src/routes/signinRoutes')
 const createMessRoutes = require('./src/routes/createMessRoutes');
 const managerRoutes = require('./src/routes/managerRoutes') 
-const memberRoutes=require('./src/routes/memberRoutes');
+const memberRoutes=require('./src/routes/membersRoutes');
 const bulletinRoutes = require('./src/routes/bulletinRoutes')
 const expenseRoutes = require('./src/routes/expenseRoutes');
 const roleChecker = require('./src/middleware/roleChecker');
@@ -22,6 +22,7 @@ const mealRoutes=require('./src/routes/mealRoutes');
 const signoutRoutes=require('./src/routes/signoutRoutes');
 const scheduleRoutes= require('./src/routes/scheduleRoutes')
 const summaryRoutes=require('./src/routes/summaryRoutes');
+const settleExpenseRoutes=require('./src/routes/settleExpense');
 
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
@@ -56,6 +57,12 @@ app.use('/schedule',scheduleRoutes);
 
 //summary routes
 app.use('/summary',summaryRoutes);
+
+//member routes
+app.use('/member',memberRoutes)
+
+//settle expense routes
+app.use('/settle', settleExpenseRoutes)
 
 app.get('/', [auth,ownerChecker] ,(req, res) => {
     res.send(req.user)

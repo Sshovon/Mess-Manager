@@ -4,7 +4,7 @@ const auth = require('../middleware/auth')
 const ownerChecker = require('../middleware/ownerChecker')
 const User = require('../models/userModel')
 const Mess = require('../models/messModel')
-const { route } = require('./memberRoutes')
+const { route } = require('./membersRoutes')
 
 
 router.post('/', auth, async(req, res) => {

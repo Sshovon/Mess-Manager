@@ -7,11 +7,11 @@ const auth = async (req,res,next)=>{
         const token = req.body.token;
         const decoded = jwt.verify(token,process.env.JWT);
         const user = await User.find({_id:decoded._id , "tokens.token" : token })
-        if(!user) throw new Error();
+        if(!user) throw new Error("Please Authenticate");
         const mess= await Mess.find({_id:user[0].messID});
         req.user = user[0];
         req.mess=mess[0];
-        if(!mess) throw new Error();
+        if(!mess) throw new Error("Please Authenticate");
         next()
         
     }catch(e){

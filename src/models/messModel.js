@@ -16,18 +16,21 @@ const messListSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    mealCost:{
-        type:Number,
-        default:0
+    mealCost: {
+        type: Number,
+        default: 0
     },
-    schedules: [{
-        name: {
-            type: String,
-        },
-        schedule: {
-            type: Date,
+    schedules: [
+        {
+            holder: {
+                type: String,
+            },
+            schedule: {
+                type: String,
+                default:""
+            },
+            ownerID:mongoose.Types.ObjectId
         }
-    }
     ],
     members: [
         {
@@ -50,40 +53,40 @@ const messListSchema = new mongoose.Schema({
                 type: String,
                 default: new Date().toLocaleDateString()
             },
-            name:String,
+            name: String,
 
         }
     ],
-    mealList:[
+    mealList: [
         {
-            date:{
-                type:String,
-                required:true,
+            date: {
+                type: String,
+                required: true,
             },
-            dailyList:[
+            dailyList: [
                 {
-                    name:String,
-                    breakfast:Number,
-                    lunch:Number,
-                    dinner:Number,
-                    ownerID:mongoose.Types.ObjectId
+                    name: String,
+                    breakfast: Number,
+                    lunch: Number,
+                    dinner: Number,
+                    ownerID: mongoose.Types.ObjectId
                 }
 
             ]
         }
     ],
-    bulletinBoard:[
+    bulletinBoard: [
         {
-            itemName:String,
-            itemQuantity:String,
-            addedBy:mongoose.Types.ObjectId,
-            addedTime:{
-                type:String,
-                default:new Date().toLocaleString()
+            itemName: String,
+            itemQuantity: String,
+            addedBy: mongoose.Types.ObjectId,
+            addedTime: {
+                type: String,
+                default: new Date().toLocaleString()
             },
-            done:{
-                type:Boolean,
-                default:false
+            done: {
+                type: Boolean,
+                default: false
             }
 
         }
@@ -111,21 +114,21 @@ messListSchema.methods.updateExpense = async function () {
 
 }
 
-messListSchema.methods.updateMealList = async function(date,dailyList,newMealCount){
-    const mess=this;
+messListSchema.methods.updateMealList = async function (date, dailyList, newMealCount) {
+    const mess = this;
     mess.totalMeal += newMealCount;
-    mess.mealList=mess.mealList.filter(element=>element.date != date);
-    mess.mealList=mess.mealList.concat({date,dailyList});
+    mess.mealList = mess.mealList.filter(element => element.date != date);
+    mess.mealList = mess.mealList.concat({ date, dailyList });
     await mess.save();
 
 }
 
 
-messListSchema.methods.generateMealCost= async function(){
-    const mess= this;
-    mess.mealCost=(mess.totalExpense/mess.totalMeal);
+messListSchema.methods.generateMealCost = async function () {
+    const mess = this;
+    mess.mealCost = (mess.totalExpense / mess.totalMeal);
     await mess.save();
-} 
+}
 
 //// statics methods 
 
