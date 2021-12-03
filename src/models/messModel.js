@@ -49,7 +49,8 @@ const messListSchema = new mongoose.Schema({
             date: {
                 type: String,
                 default: new Date().toLocaleDateString()
-            }
+            },
+            name:String,
 
         }
     ],

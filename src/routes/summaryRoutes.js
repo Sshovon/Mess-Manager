@@ -30,7 +30,7 @@ router.post('/meal',auth,async(req,res)=>{
             member.totalMeal=element.totalMeal
             membersRefinedDetails=membersRefinedDetails.concat(member);
 
-        });
+        }); 
         res.status(200).json({
             totalMeal:users.totalMeal,
             membersRefinedDetails
@@ -58,7 +58,6 @@ router.post('/balance',auth,async(req,res)=>{
 
         });
         res.status(200).json({
-            totalMeal:users.totalMeal,
             membersRefinedDetails
         });
         

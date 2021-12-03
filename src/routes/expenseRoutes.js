@@ -7,21 +7,32 @@ const User = require('../models/userModel');
 const Mess = require('../models/messModel')
 
 
+router.post('/show', auth, async (req, res) => {
+    try {
+        const expenses = req.mess.expenses;
+        res.send({ expenses })
 
-router.post('/add',auth, async (req, res) => {
+    } catch (e) {
+        const error = e.message;
+        res.send({ error })
+    }
+})
+
+
+router.post('/add', auth, async (req, res) => {
     try {
         const { expense, description } = req.body;
         const spender = req.user._id;
-
+        const name = req.user.name
         const updatedExpense = await Mess.findOneAndUpdate({ _id: req.mess._id }, {
             $push: {
                 expenses: {
-                    expense, description, spender
+                    expense, description, spender, name
                 }
             }
-        },{new:true})
-        req.mess.totalExpense+=expense;
-        const _id = updatedExpense.expenses[updatedExpense.expenses.length-1]._id
+        }, { new: true })
+        req.mess.totalExpense += expense;
+        const _id = updatedExpense.expenses[updatedExpense.expenses.length - 1]._id
         await User.updateOne({ _id: req.user._id }, { expense: req.user.expense + expense });
         await User.updateOne({ _id: req.user._id }, {
             $push: {
@@ -83,7 +94,7 @@ router.delete("/delete/:id", [auth, ownerChecker], async (req, res) => {
         //await req.mess.save();
         await req.mess.updateExpense();
         await req.mess.generateMealCost();
-        
+
         res.send("success")
 
     } catch (e) {
@@ -92,4 +103,4 @@ router.delete("/delete/:id", [auth, ownerChecker], async (req, res) => {
 })
 
 
-module.exports=router;
+module.exports = router;
