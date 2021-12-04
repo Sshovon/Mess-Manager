@@ -29,13 +29,25 @@ router.post('/', async (req, res) => {
                 members: user._id
             }
         })
-        res.status(200).send(user);
+        const mess=await Mess.findOne({_id:user.messID});
+        const mealList=mess.mealList;
 
+        mealList.forEach((element)=>{
+            element.dailyList=element.dailyList.concat({
+                name,
+                breakfast:0,
+                lunch:0,
+                dinner:0,
+                ownerID:user._id
+            })
+        })
+        await mess.save();
+        res.status(200).send(user);
+        
     } catch (e) {
         const error = e.message;
         res.status(400).send({ error });
     }
-
 })
 module.exports = router;
 

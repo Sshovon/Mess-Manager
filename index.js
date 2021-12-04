@@ -23,6 +23,7 @@ const signoutRoutes=require('./src/routes/signoutRoutes');
 const scheduleRoutes= require('./src/routes/scheduleRoutes')
 const summaryRoutes=require('./src/routes/summaryRoutes');
 const settleExpenseRoutes=require('./src/routes/settleExpense');
+const inviteRoutes=require('./src/routes/inviteRoutes');
 
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
@@ -63,6 +64,9 @@ app.use('/member',memberRoutes)
 
 //settle expense routes
 app.use('/settle', settleExpenseRoutes)
+
+//invite routes
+app.use('/invite',inviteRoutes);
 
 app.get('/', [auth,ownerChecker] ,(req, res) => {
     res.send(req.user)
