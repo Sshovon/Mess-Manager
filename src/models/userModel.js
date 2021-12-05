@@ -150,6 +150,7 @@ userSchema.statics.verifyCredentials = async function (email, password) {
 }
 
 
+
 userSchema.statics.doCount=async function (dailyList) {
     let totalMeal=0;
     for (const element of dailyList) {
@@ -175,6 +176,16 @@ userSchema.statics.updateDoCount= async function(dailyList){
     return totalMeal;
 }
 
+userSchema.statics.endMonthForMembers = async function(messID){
+    const members=await User.find({messID})
+    for(let member of members ){
+        member.expenses=[];
+        member.expense=0;
+        member.totalMeal=0;
+        await member.save();
+    }
+}
+
 /////// Middleware ///////
 
 userSchema.pre('save', async function () {
@@ -183,6 +194,8 @@ userSchema.pre('save', async function () {
         user.password = await bcryptjs.hash(user.password, 8);
     }
 })
+
+
 
 const User = mongoose.model('User', userSchema)
 

@@ -24,6 +24,7 @@ const scheduleRoutes= require('./src/routes/scheduleRoutes')
 const summaryRoutes=require('./src/routes/summaryRoutes');
 const settleExpenseRoutes=require('./src/routes/settleExpense');
 const inviteRoutes=require('./src/routes/inviteRoutes');
+const endMonthRoutes=require('./src/routes/endMonthRoutes');
 
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
@@ -67,6 +68,9 @@ app.use('/settle', settleExpenseRoutes)
 
 //invite routes
 app.use('/invite',inviteRoutes);
+
+//end month Routes
+app.use('/endmonth',endMonthRoutes);
 
 app.get('/', [auth,ownerChecker] ,(req, res) => {
     res.send(req.user)

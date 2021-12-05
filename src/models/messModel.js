@@ -27,9 +27,9 @@ const messListSchema = new mongoose.Schema({
             },
             schedule: {
                 type: String,
-                default:""
+                default: ""
             },
-            ownerID:mongoose.Types.ObjectId
+            ownerID: mongoose.Types.ObjectId
         }
     ],
     members: [
@@ -102,7 +102,6 @@ const messListSchema = new mongoose.Schema({
 /// Instance Methods ////
 messListSchema.methods.updateExpense = async function () {
     const mess = this;
-    //const messObject=mess.toObject();
     let messTotalExpense = 0;
     const messExpenses = mess.expenses;
 
@@ -128,6 +127,19 @@ messListSchema.methods.generateMealCost = async function () {
     const mess = this;
     mess.mealCost = (mess.totalExpense / mess.totalMeal);
     await mess.save();
+}
+
+messListSchema.methods.endMonthForMess = async function () {
+    const mess = this;
+    mess.totalExpense = 0;
+    mess.totalMeal = 0;
+    mess.mealCost = 0;
+    mess.schedules = []
+    mess.expenses = [];
+    mess.mealList = [];
+    mess.bulletinBoard = [];
+    await mess.save();
+
 }
 
 //// statics methods 
