@@ -142,8 +142,22 @@ messListSchema.methods.endMonthForMess = async function () {
 
 }
 
+messListSchema.methods.generateDateList=async function(){
+    const mess= this;
+    let dates=[];
+    for(let element of mess.mealList){
+        dates.push(element.date)
+      
+    } 
+
+    dates.sort(function(a,b){
+        return new Date(a)-new Date(b)
+    }) 
+    return dates;
+}   
+
 //// statics methods 
 
 const messList = mongoose.model('MessList', messListSchema)
 
-module.exports = messList;
+module.exports = messList

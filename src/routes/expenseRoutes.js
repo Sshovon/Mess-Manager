@@ -76,6 +76,7 @@ router.patch('/update/:id', [auth, ownerChecker], async (req, res) => {
     } catch (e) {
         res.send('error');
     }
+    
 })
 
 

@@ -30,10 +30,17 @@ router.post('/show', auth, async (req, res) => {
                     dinner:0,
                     ownerID:member._id
                 })
-                
             })
-        
         dailyList=demand
+        }else{
+            const [allUser] = await Mess.find({ _id: req.mess._id }).populate('members')
+            for(let u1 of allUser.members){ 
+                dailyList.dailyList.find((element)=>{
+                    if(element.ownerID==u1._id.toString()){
+                        element.name=u1.name;
+                    }
+                })
+            }
         }
         res.send(dailyList)
 

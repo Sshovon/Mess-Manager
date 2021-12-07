@@ -5,6 +5,7 @@ const User = require('./src/models/userModel');
 const Mess = require('./src/models/messModel')
 const cookieParser = require('cookie-parser')
 const cors= require('cors')
+const multer= require('multer');
 const app = express();
 const port = process.env.PORT || 4004;
 
@@ -25,6 +26,7 @@ const summaryRoutes=require('./src/routes/summaryRoutes');
 const settleExpenseRoutes=require('./src/routes/settleExpense');
 const inviteRoutes=require('./src/routes/inviteRoutes');
 const endMonthRoutes=require('./src/routes/endMonthRoutes');
+const generateStatisticsRoutes=require('./src/routes/generateStatisticRoutes');
 
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
@@ -71,6 +73,11 @@ app.use('/invite',inviteRoutes);
 
 //end month Routes
 app.use('/endmonth',endMonthRoutes);
+
+//generate statistics Routes
+app.use('/generateStatistics',generateStatisticsRoutes);
+
+
 
 app.get('/', [auth,ownerChecker] ,(req, res) => {
     res.send(req.user)
