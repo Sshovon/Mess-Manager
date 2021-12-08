@@ -8,7 +8,26 @@ const Mess = require('../models/messModel')
 
 
 
+router.post('/swap',[auth,roleChecker],async(req,res)=>{
+    try{
+        const newManagerID=req.body.newManagerID;
+        const newManager=await User.findOne({_id:newManagerID});
+        
+        newManager.role='manager';
+        await newManager.save();
+        req.user.role="member";
+        await req.user.save();
 
+        res.send({
+            result:"success"
+        })
+        
+
+    }catch(e){
+        const error=e.message;
+        res.send({error});
+    }
+})
 
 
 

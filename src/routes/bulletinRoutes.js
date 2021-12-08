@@ -51,5 +51,16 @@ router.delete('/delete/:id', auth, async (req, res) => {
 
     }
 })
+router.post('/show',auth,async(req,res)=>{
+    try{
+        res.send({
+            bulletins:req.mess.bulletinBoard
+        })
+
+    }catch(e){
+        const error=e.message;
+        res.send({error})
+    }
+})
 
 module.exports = router;

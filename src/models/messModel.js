@@ -22,7 +22,7 @@ const messListSchema = new mongoose.Schema({
     },
     schedules: [
         {
-            holder: {
+            holderName: {
                 type: String,
             },
             schedule: {

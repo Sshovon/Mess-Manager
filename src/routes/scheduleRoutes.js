@@ -25,13 +25,21 @@ router.post('/create',[auth,roleChecker],async(req,res)=>{
 router.post('/get',auth,async(req,res)=>{
     try{
         const {schedule}=req.body;
-        console.log(schedule)
         const index=req.mess.schedules.find(element=> schedule===element.schedule);
-        index.holder=req.user.name
+        index.holderName=req.user.name
         index.ownerID=req.user._id
         await req.mess.save()
         res.send(req.mess);
+    }catch(e){
+        const error=e.message;
+        res.send({error})
+    }
+})
 
+router.post('/show',auth,async(req,res)=>{
+    try{
+        res.send({schedules:req.mess.schedules})
+        
     }catch(e){
 
         const error=e.message;
