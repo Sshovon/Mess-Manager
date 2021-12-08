@@ -36,7 +36,7 @@ app.use(cors({
     credentials:true,
     origin:true
 }))
-app.use(express.static(__dirname))
+app.use(express.static('./public'))
 
 //signup routes
 app.use('/signup',signupRoutes);

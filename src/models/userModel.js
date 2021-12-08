@@ -101,9 +101,15 @@ const userSchema = new mongoose.Schema({
                 default: new Date().toLocaleDateString()
             }
         }
-    ]
+    ],
+    image:{
+        fileName:String,
+        filePath:String,
+        fileType:String,
+        fileSize:String,
+        data:Buffer,
+    }
 })
-
 /////// Instance Methods ////////
 
 userSchema.methods.toJSON = function () {

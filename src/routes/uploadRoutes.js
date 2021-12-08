@@ -1,21 +1,26 @@
 const express=require('express')
 const router = express.Router();
 const upload =require('../middleware/fileHelper');
+const {readFileSync}=require('fs');
+const path=require('path');
+const auth=require("../middleware/auth")
 
 
 
-router.post('/image',upload.single('file'),async (req,res)=>{
+router.post('/image',[auth,upload.single('file')],async (req,res)=>{
     try{
-        const file = {
+        const image = {
             fileName:req.file.originalname,
             filePath:req.file.path,
             fileType:req.file.mimetype,
-            fileSize:fileFormater(req.file.size)
-
+            fileSize:fileFormater(req.file.size),
+            data:readFileSync(path.join(__dirname+'/../../'+req.file.path))
         }
+        req.user.image=image;
+        await req.user.save();
         res.send({
             result:"success",
-            file
+            image
         })
     }catch(e){
         const error=e.message
@@ -24,6 +29,8 @@ router.post('/image',upload.single('file'),async (req,res)=>{
         })
     }
 })
+
+
 
 
 const fileFormater=(bytes,decimal)=>{

@@ -13,7 +13,8 @@ router.post('/add', auth, async (req, res) => {
         req.mess.bulletinBoard = req.mess.bulletinBoard.concat({
             itemName,
             itemQuantity,
-            addedBy: req.user._id
+            addedBy: req.user.name,
+            addedByID:req.user._id
         });
         await req.mess.save();
         res.send({ result: "success" });
