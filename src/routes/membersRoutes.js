@@ -18,8 +18,9 @@ router.post('/show', auth, async (req, res) => {
         users.forEach(user => {
             const userDetail = {}
             userDetail._id = user._id,
-                userDetail.name = user.name
-            console.log(userDetail)
+            userDetail.name = user.name;
+            userDetail.email=user.email;
+            userDetail.mobile=user.mobile;
             usersDetails.push(userDetail);
         })
         res.send(usersDetails);
@@ -35,12 +36,12 @@ router.post('/show', auth, async (req, res) => {
 
 router.post('/delete', [auth, roleChecker], async (req, res) => {
     try {
-        const _id= req.body.id;
-        if(req.mess.mealList.length)
+        const _id = req.body.id;
+        if (req.mess.mealList.length)
             throw new Error("Cant remove member")
-        await User.deleteOne({_id});
+        await User.deleteOne({ _id });
         res.send({
-            result:"success"
+            result: "success"
         })
 
     } catch (e) {
@@ -50,5 +51,7 @@ router.post('/delete', [auth, roleChecker], async (req, res) => {
         })
     }
 })
+
+
 
 module.exports = router

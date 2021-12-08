@@ -29,6 +29,7 @@ const inviteRoutes=require('./src/routes/inviteRoutes');
 const endMonthRoutes=require('./src/routes/endMonthRoutes');
 const generateStatisticsRoutes=require('./src/routes/generateStatisticRoutes');
 const uploadRoutes=require('./src/routes/uploadRoutes');
+const profileRoutes=require('./src/routes/profileRoutes');
 
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
@@ -86,6 +87,8 @@ app.use('/generateStatistics',generateStatisticsRoutes);
 //upload routes
 app.use('/upload',uploadRoutes);
 
+//profile routes
+app.use('/profile',profileRoutes)
 
 
 app.get('/', [auth,ownerChecker] ,(req, res) => {
