@@ -55,6 +55,7 @@ router.delete('/delete/:id', auth, async (req, res) => {
 router.post('/show',auth,async(req,res)=>{
     try{
         res.send({
+            
             bulletins:req.mess.bulletinBoard
         })
 

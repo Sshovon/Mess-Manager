@@ -79,7 +79,8 @@ const messListSchema = new mongoose.Schema({
         {
             itemName: String,
             itemQuantity: String,
-            addedBy: mongoose.Types.ObjectId,
+            addedBy: String,
+            addedByID:mongoose.Types.ObjectId,
             addedTime: {
                 type: String,
                 default: new Date().toLocaleString()
@@ -137,7 +138,7 @@ messListSchema.methods.endMonthForMess = async function () {
     mess.schedules = []
     mess.expenses = [];
     mess.mealList = [];
-    mess.bulletinBoard = [];
+    //mess.bulletinBoard = [];
     await mess.save();
 
 }

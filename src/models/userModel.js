@@ -199,6 +199,7 @@ userSchema.statics.endMonthForMembers = async function (messID) {
         member.expenses = [];
         member.expense = 0;
         member.totalMeal = 0;
+        delete member.schedule;
         await member.save();
     }
 }
