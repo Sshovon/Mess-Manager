@@ -14,7 +14,10 @@ router.post('/', auth, async (req, res) => {
     
 
     users.forEach((element) => {
-        const user = { name: element.name };
+        const user = { 
+            name: element.name,
+            userID:element._id
+         };
         if ((element.expense - (element.totalMeal * req.mess.mealCost)) >= 0) {
             user.balance = element.expense - (element.totalMeal * req.mess.mealCost)
             console.log({
@@ -23,7 +26,6 @@ router.post('/', auth, async (req, res) => {
                 mealCost: req.mess.mealCost,
                 balance: user.balance
             })
-            
             positiveBalance = positiveBalance.concat(user)
 
         } else {
@@ -36,24 +38,21 @@ router.post('/', auth, async (req, res) => {
                 balance: user.balance
             })
              negativeBalance = negativeBalance.concat(user)
-
         }
     })
     let settleObject=[]
     positiveBalance.sort((a, b) => b.balance - a.balance);
     negativeBalance.sort((a, b) => a.balance - b.balance);
-    console.log(positiveBalance);
-    console.log(negativeBalance);
     while (negativeBalance.length) {
         const individualSettle={}; 
         if (negativeBalance[0].balance * (-1) <= positiveBalance[0].balance) {
-            console.log(`${negativeBalance[0].name} should give ${negativeBalance[0].balance * -1} to ${positiveBalance[0].name}`)
-            
+            console.log(`${negativeBalance[0].name} should give ${negativeBalance[0].balance * -1} to ${positiveBalance[0].name}`) 
             individualSettle.moneyTo=positiveBalance[0].name;
+            individualSettle.moneyToID=positiveBalance[0].userID;
             individualSettle.moneyFrom=negativeBalance[0].name;
+            individualSettle.moneyFromID=negativeBalance[0].userID;
             individualSettle.amount=negativeBalance[0].balance*-1;
             settleObject.push(individualSettle);
-        
             const u1 = negativeBalance.shift();
             const u2 = positiveBalance.shift();
                 
@@ -64,7 +63,9 @@ router.post('/', auth, async (req, res) => {
             console.log(`${negativeBalance[0].name} should give ${positiveBalance[0].balance} to ${positiveBalance[0].name}`)
             
             individualSettle.moneyTo=positiveBalance[0].name;
+            individualSettle.moneyToID=positiveBalance[0].userID;
             individualSettle.moneyFrom=negativeBalance[0].name;
+            individualSettle.moneyFromID=negativeBalance[0].userID;
             individualSettle.amount=positiveBalance[0].balance;
             settleObject.push(individualSettle);
             
@@ -79,6 +80,5 @@ router.post('/', auth, async (req, res) => {
     console.log(settleObject)
     res.send(settleObject)
 })
-
 
 module.exports = router;

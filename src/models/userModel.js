@@ -68,9 +68,9 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    totalMeal:{
-        type:Number,
-        default:0
+    totalMeal: {
+        type: Number,
+        default: 0
     },
     // lunchList: {
     //     type: [lunchSchema]
@@ -89,10 +89,10 @@ const userSchema = new mongoose.Schema({
             }
         }
     ],
-    expenses:[
+    expenses: [
         {
-            expense:{
-                type:Number,
+            expense: {
+                type: Number,
                 required: true,
             },
             description: String,
@@ -102,13 +102,25 @@ const userSchema = new mongoose.Schema({
             }
         }
     ],
-    image:{
-        fileName:String,
-        filePath:String,
-        fileType:String,
-        fileSize:String,
-        data:Buffer,
-    }
+    image: {
+        fileName: String,
+        filePath: String,
+        fileType: String,
+        fileSize: String,
+        data: Buffer,
+    },
+    payments: [
+        {
+            moneyFromID: mongoose.Types.ObjectId,
+            moneyFrom: String,
+            moneyToID: mongoose.Types.ObjectId,
+            moneyTo: String,
+            amount: Number
+        }
+    ],
+    schedule:String,
+
+    
 })
 /////// Instance Methods ////////
 
@@ -129,15 +141,15 @@ userSchema.methods.generateAuthToken = async function () {
     return token;
 }
 
-userSchema.methods.updateExpense= async function(){
-    const user= this;
-    let userTotalExpense=0;
-    const userExpenses=user.expenses;
-    
-    for(let i=0;i<userExpenses.length;i++){
-        userTotalExpense+=userExpenses[i].expense;
+userSchema.methods.updateExpense = async function () {
+    const user = this;
+    let userTotalExpense = 0;
+    const userExpenses = user.expenses;
+
+    for (let i = 0; i < userExpenses.length; i++) {
+        userTotalExpense += userExpenses[i].expense;
     }
-    user.expense=userTotalExpense;
+    user.expense = userTotalExpense;
     await user.save()
 
 }
@@ -156,9 +168,8 @@ userSchema.statics.verifyCredentials = async function (email, password) {
 }
 
 
-
-userSchema.statics.doCount=async function (dailyList) {
-    let totalMeal=0;
+userSchema.statics.doCount = async function (dailyList) {
+    let totalMeal = 0;
     for (const element of dailyList) {
         const user = await User.findOne({ _id: element.ownerID })
         const count = element.breakfast + element.lunch + element.dinner;
@@ -170,8 +181,8 @@ userSchema.statics.doCount=async function (dailyList) {
     return totalMeal;
 }
 
-userSchema.statics.updateDoCount= async function(dailyList){
-    let totalMeal=0;
+userSchema.statics.updateDoCount = async function (dailyList) {
+    let totalMeal = 0;
     for (const element of dailyList) {
         const user = await User.findOne({ _id: element.ownerID })
         const count = element.breakfast + element.lunch + element.dinner;
@@ -182,14 +193,35 @@ userSchema.statics.updateDoCount= async function(dailyList){
     return totalMeal;
 }
 
-userSchema.statics.endMonthForMembers = async function(messID){
-    const members=await User.find({messID})
-    for(let member of members ){
-        member.expenses=[];
-        member.expense=0;
-        member.totalMeal=0;
+userSchema.statics.endMonthForMembers = async function (messID) {
+    const members = await User.find({ messID })
+    for (let member of members) {
+        member.expenses = [];
+        member.expense = 0;
+        member.totalMeal = 0;
         await member.save();
     }
+}
+
+userSchema.statics.setPayment= async function(settleObject){
+    
+    for(settle of settleObject){
+        const res1=await User.findOne({_id:settle.moneyFromID});
+        const res2=await User.findOne({_id:settle.moneyToID});  
+        // if(!res1.payments)
+        //     res1.payments=[]
+        // if(!res2.payments)
+        //     res2.payments=[]
+        res1.payments=res1.payments.concat(settle);
+        res2.payments=res2.payments.concat(settle);
+        console.log(res1);
+
+        await res1.save();
+        await res2.save();
+
+        
+    }
+
 }
 
 /////// Middleware ///////

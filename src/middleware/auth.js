@@ -4,8 +4,6 @@ const Mess = require('../models/messModel')
 
 const auth = async (req,res,next)=>{
     try{
-
-
         let token = req.body.token;
         if(req.headers.token)
             token=req.headers.token;

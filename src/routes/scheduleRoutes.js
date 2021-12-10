@@ -10,8 +10,11 @@ const { find } = require('../models/userModel')
 router.post('/create',[auth,roleChecker],async(req,res)=>{
     try{
         const {schedule}=req.body;
+        const holderName="";
         req.mess.schedules = req.mess.schedules.concat({
-            schedule
+            schedule,
+            holderName
+
         });
         await req.mess.save();
         res.send({result:"success"});
@@ -22,13 +25,17 @@ router.post('/create',[auth,roleChecker],async(req,res)=>{
     }
 })
 
-router.post('/get',auth,async(req,res)=>{
+
+///do unset logic 
+router.post('/set',auth,async(req,res)=>{
     try{
         const {schedule}=req.body;
         const index=req.mess.schedules.find(element=> schedule===element.schedule);
         index.holderName=req.user.name
         index.ownerID=req.user._id
-        await req.mess.save()
+        req.user.schedule=schedule;
+        await req.mess.save();
+        await req.user.save();
         res.send(req.mess);
     }catch(e){
         const error=e.message;

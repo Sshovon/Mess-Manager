@@ -30,6 +30,7 @@ const endMonthRoutes=require('./src/routes/endMonthRoutes');
 const generateStatisticsRoutes=require('./src/routes/generateStatisticRoutes');
 const uploadRoutes=require('./src/routes/uploadRoutes');
 const profileRoutes=require('./src/routes/profileRoutes');
+const paymentRoutes=require('./src/routes/paymentRoutes');
 
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
@@ -89,6 +90,9 @@ app.use('/upload',uploadRoutes);
 
 //profile routes
 app.use('/profile',profileRoutes)
+
+//payment routes
+app.use('/payment',paymentRoutes);
 
 
 app.get('/', [auth,ownerChecker] ,(req, res) => {
