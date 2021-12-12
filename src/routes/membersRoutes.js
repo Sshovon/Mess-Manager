@@ -21,6 +21,7 @@ router.post('/show', auth, async (req, res) => {
             userDetail.name = user.name;
             userDetail.email=user.email;
             userDetail.mobile=user.mobile;
+            userDetail.role=user.role;
             usersDetails.push(userDetail);
         })
         res.send(usersDetails);

@@ -91,6 +91,13 @@ const messListSchema = new mongoose.Schema({
             }
 
         }
+    ],
+    messages:[
+        {
+            message:String,
+            time:new Date().toLocaleString(),
+            ownerID:mongoose.Types.ObjectId
+        }
     ]
 
 
