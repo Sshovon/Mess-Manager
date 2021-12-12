@@ -4,7 +4,7 @@ const Mess = require('../models/messModel')
 
 const auth = async (req,res,next)=>{
     try{
-        let token = req.body.token;
+        let token = req.body.token || req.cookies.token;
         if(req.headers.token)
             token=req.headers.token;
         const decoded = jwt.verify(token,process.env.JWT);

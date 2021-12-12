@@ -37,11 +37,22 @@ router.post('/show', auth, async (req, res) => {
 router.post('/delete', [auth, roleChecker], async (req, res) => {
     try {
         const _id = req.body.id;
+        console.log(_id)
         if (req.mess.mealList.length)
             throw new Error("Cant remove member")
-        await User.deleteOne({ _id });
+        const result= await User.findOne({_id})
+        
+        req.mess.members=req.mess.members.filter(member=>{ 
+            return member.toString() !=_id
+        })
+        
+        delete result.messID;
+        await result.save();
+        await req.mess.save();
+        console.log(req.mess.members)
+        
         res.send({
-            result: "success"
+            result: "success is in your veins"
         })
 
     } catch (e) {
@@ -51,7 +62,6 @@ router.post('/delete', [auth, roleChecker], async (req, res) => {
         })
     }
 })
-
 
 
 module.exports = router
