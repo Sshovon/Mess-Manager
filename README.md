@@ -61,7 +61,11 @@ sudo apt install npm
 ```
 * Now clone frontend from following git repo.
 ```
+<<<<<<< HEAD
 git clone 
+=======
+git clone https://github.com/nahid-g/Mess-Manager-Client.git
+>>>>>>> 30f7ac7f3be705f0575b9adc9e517ecb4bd95a7f
 ```
 
 * Now install dependencies from source folder.
@@ -74,7 +78,23 @@ npm install
 npm start
 ```
 
+<<<<<<< HEAD
 As we used mongoDB cloud, use provided credentials to join as a manager with populated data.
 ```
 email- 
 ```
+=======
+As we used mongoDB cloud, use provided credentials to join as a manager with populated data. \n
+Manager
+```
+email-n@gmail.com
+password-123456
+```
+Member
+```
+email-r@gmail.com
+password-123456
+```
+
+Or you can  create a new mess and add members from the scratch.
+>>>>>>> 30f7ac7f3be705f0575b9adc9e517ecb4bd95a7f
