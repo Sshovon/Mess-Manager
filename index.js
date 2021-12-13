@@ -32,7 +32,8 @@ const uploadRoutes=require('./src/routes/uploadRoutes');
 const profileRoutes=require('./src/routes/profileRoutes');
 const paymentRoutes=require('./src/routes/paymentRoutes');
 const messageRoutes= require('./src/routes/messageRoutes');
-
+const chatServer= require('./src/routes/liveChat');
+chatServer();
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
 app.use(cors({

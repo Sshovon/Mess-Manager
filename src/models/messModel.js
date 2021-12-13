@@ -96,11 +96,10 @@ const messListSchema = new mongoose.Schema({
         {
             message:String,
             time:String,
-            ownerID:mongoose.Types.ObjectId
+            ownerID:mongoose.Types.ObjectId,
+            name:String
         }
     ]
-
-
 })
 
 /// pluging////
