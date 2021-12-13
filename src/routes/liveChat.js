@@ -3,6 +3,7 @@ const app = express();
 const http = require("http");
 const cors = require("cors");
 const { Server } = require("socket.io");
+const Mess= require('../models/messModel');
 app.use(cors());
 
 const run = async () => {
@@ -14,17 +15,27 @@ const run = async () => {
     },
   });
 
-  io.on("connection", (socket) => {
+  io.on("connection",(socket) => {
     console.log(`User Connected: ${socket.id}`);
 
-    socket.on("join_room", (data) => {
+    socket.on("join_room",(data) => {
       console.log(`joined room :${socket.id}`);
       socket.join(data);
+      
       console.log(`User with ID: ${socket.id} joined room: ${data}`);
     });
 
-    socket.on("send_message", (data) => {
+    socket.on("send_message", async(data) => {
       console.log(data)
+      const {author,message,time,room}=data
+      const mess=await Mess.findOne({_id:room})
+      mess.messages=mess.messages.concat({
+        message,
+        time,
+        name:author
+      })
+      mess.save();
+
       socket.to(data.room).emit("receive_message", data);
     });
 

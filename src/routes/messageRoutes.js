@@ -7,26 +7,6 @@ const Mess = require('../models/messModel')
 const Statistics = require('../models/statisticsModel')
 const roleChecker = require('../middleware/roleChecker')
 
-router.post('/add', auth, async(req, res) => {
-    try {
-
-        const {message,time} =req.body;
-        
-        req.mess.messages=req.mess.messages.concat({
-            message,
-            ownerID:req.user._id,
-            time
-        })
-        await req.mess.save();
-        res.send({
-            result:"success"
-        })
-
-    } catch (e) {   
-        error=e.message;
-        res.send({error});
-    }
-})
 
 
 router.post('/show', auth, async(req, res) => {
