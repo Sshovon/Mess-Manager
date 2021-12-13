@@ -10,9 +10,12 @@ const roleChecker = require('../middleware/roleChecker')
 router.post('/add', auth, async(req, res) => {
     try {
 
+        const {message,time} =req.body;
+        
         req.mess.messages=req.mess.messages.concat({
             message,
-            ownerID:req.user._id
+            ownerID:req.user._id,
+            time
         })
         await req.mess.save();
         res.send({

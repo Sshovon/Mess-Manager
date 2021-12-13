@@ -1,6 +1,6 @@
 const express = require('express')
-require('./src/db/mongoose') /// this ensures that mongoose.js run once and connects to database
 require('dotenv').config()
+require('./src/db/mongoose') /// this ensures that mongoose.js run once and connects to database
 const User = require('./src/models/userModel');
 const Mess = require('./src/models/messModel')
 const cookieParser = require('cookie-parser')
@@ -31,6 +31,7 @@ const generateStatisticsRoutes=require('./src/routes/generateStatisticRoutes');
 const uploadRoutes=require('./src/routes/uploadRoutes');
 const profileRoutes=require('./src/routes/profileRoutes');
 const paymentRoutes=require('./src/routes/paymentRoutes');
+const messageRoutes= require('./src/routes/messageRoutes');
 
 app.use(express.json()); ///this parses incoming jsons to object
 app.use(cookieParser()) /// parses cookie
@@ -93,6 +94,9 @@ app.use('/profile',profileRoutes)
 
 //payment routes
 app.use('/payment',paymentRoutes);
+
+//message Routes
+app.use('/message' ,messageRoutes);
 
 
 app.get('/', [auth,ownerChecker] ,(req, res) => {
