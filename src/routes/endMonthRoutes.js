@@ -18,8 +18,8 @@ router.post('/', [auth,roleChecker], async (req, res) => {
         const dates=await req.mess.generateDateList();
         overView.startDate=dates[0];
         overView.endDate=dates[dates.length-1];
-        //await req.mess.endMonthForMess();
-        //await User.endMonthForMembers(req.mess._id);
+        await req.mess.endMonthForMess();
+        await User.endMonthForMembers(req.mess._id);
         
         const stat=new Statistics({
             messID:req.mess._id,
