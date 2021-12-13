@@ -30,6 +30,19 @@ router.post('/image',[auth,upload.single('file')],async (req,res)=>{
     }
 })
 
+router.post('/get',auth,async (req,res)=>{
+    try{
+        res.send({
+            imageData: req.user.image
+        })
+    }catch(e){
+        const error=e.message
+        res.send({
+            error
+        })
+    }
+})
+
 
 
 
