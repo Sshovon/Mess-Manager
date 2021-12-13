@@ -74,7 +74,7 @@ npm install
 npm start
 ```
 
-As we used mongoDB cloud, use provided credentials to join as a manager with populated data.
+As we used mongoDB cloud, use provided credentials to join as a manager with populated data. \n
 Manager
 ```
 email-n@gmail.com
