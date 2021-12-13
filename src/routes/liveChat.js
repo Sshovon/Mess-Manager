@@ -32,7 +32,7 @@ const run = async () => {
       mess.messages=mess.messages.concat({
         message,
         time,
-        name:author
+        author
       })
       mess.save();
 
