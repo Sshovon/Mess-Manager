@@ -88,7 +88,11 @@ password-123456
 ```
 Or you can  create a new mess and add members from the scratch.
 # Presentation
- https://user-images.githubusercontent.com/47460398/145911743-4e5e3a88-3fc8-431e-8354-94cfaac92be2.mp4
- Alternative link
- https://drive.google.com/file/d/1sy7QCZavyMbdG7e1nUGgqR5AN_W-LwEy/view?usp=sharing
+ 
+
+https://user-images.githubusercontent.com/47460398/145912258-a10e4b67-29c8-4f95-a7e7-cf6705739842.mp4
+
+
+
+[Alternative link] (https://drive.google.com/file/d/1sy7QCZavyMbdG7e1nUGgqR5AN_W-LwEy/view?usp=sharing)
 
