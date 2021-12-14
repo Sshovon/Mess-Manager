@@ -39,11 +39,11 @@ git clone https://github.com/Sshovon/Mess-Manager.git
 cd /toyourclonedfloder
 touch .env
 ```
-* Paste following lines in the .env folder.
+* Paste following lines in the .env folder and also create a cluster in mongodb atlas and replace the DB_URL with your mongodb atlas provided db url.
 ```
 PORT=4004
 JWT=%mess-manager%
-DB_URL=mongodb+srv://Shovon:2017331099@cluster0.921fy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
+DB_URL=mongodb+srv://<username>:<password>@cluster0.921fy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
 PORT2=3001
 ```
 * Install dependencies using yarn and run the command from the source directroy of the project
