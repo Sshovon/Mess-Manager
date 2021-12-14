@@ -94,5 +94,4 @@ https://user-images.githubusercontent.com/47460398/145912258-a10e4b67-29c8-4f95-
 
 
 
-[Alternative link] (https://drive.google.com/file/d/1sy7QCZavyMbdG7e1nUGgqR5AN_W-LwEy/view?usp=sharing)
-
+[Alternative link](https://drive.google.com/file/d/1sy7QCZavyMbdG7e1nUGgqR5AN_W-LwEy/view?usp=sharing)
