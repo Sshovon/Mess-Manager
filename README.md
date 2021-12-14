@@ -75,7 +75,7 @@ npm install
 npm start
 ```
 
-As we used mongoDB cloud, use provided credentials to join as a manager with populated data. \n
+As we used mongoDB cloud, use provided credentials to join as a manager with populated data. <br/>
 Manager
 ```
 email-n@gmail.com
@@ -86,12 +86,9 @@ Member
 email-r@gmail.com
 password-123456
 ```
-
-
-https://user-images.githubusercontent.com/47460398/145911743-4e5e3a88-3fc8-431e-8354-94cfaac92be2.mp4
-
-
 Or you can  create a new mess and add members from the scratch.
 # Presentation
+ https://user-images.githubusercontent.com/47460398/145911743-4e5e3a88-3fc8-431e-8354-94cfaac92be2.mp4
+ Alternative link
  https://drive.google.com/file/d/1sy7QCZavyMbdG7e1nUGgqR5AN_W-LwEy/view?usp=sharing
 
