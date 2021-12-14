@@ -1,8 +1,8 @@
-## Mess-Manager
+# Mess-Manager
 Mess Mananger is mainly focused on keep tracking of a mess meal system and other maintanence cost. People who lives in mess, sometimes it becomes difficult to keep track of mess meal count and other expense related issues. So our Mess-manager webapp comes in the scene to make their life easier.
 
 
-# Features
+## Features
   * Creating mess with unique mess-code.
   * Invite people in your mess via email.
   * Join as a manager or member
@@ -17,7 +17,7 @@ Mess Mananger is mainly focused on keep tracking of a mess meal system and other
   * End month anytime and remove member option.
   * Auto generated payment after completing every month.
  
-#This project requires three dedicated server-port. (Backend, Frontend, Live Chat using Socket.io) 
+### This project requires three dedicated server-port. (Backend, Frontend, Live Chat using Socket.io) 
  
 For running this backend api follow given instructions,
 * if you dont have yarn in your device install __yarn__ 
@@ -87,7 +87,7 @@ email-r@gmail.com
 password-123456
 ```
 Or you can  create a new mess and add members from the scratch.
-# Presentation
+## Presentation
  
 
 https://user-images.githubusercontent.com/47460398/145912258-a10e4b67-29c8-4f95-a7e7-cf6705739842.mp4
