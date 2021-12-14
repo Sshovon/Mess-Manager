@@ -74,19 +74,8 @@ npm install
 ```
 npm start
 ```
+You have to create a new mess and add members from the scratch to populate data.
 
-As we used mongoDB cloud, use provided credentials to join as a manager with populated data. <br/>
-Manager
-```
-email-n@gmail.com
-password-123456
-```
-Member
-```
-email-r@gmail.com
-password-123456
-```
-Or you can  create a new mess and add members from the scratch.
 ## Presentation
  
 
