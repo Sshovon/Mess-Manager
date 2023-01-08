@@ -4,9 +4,50 @@ const auth = require('../middleware/auth')
 const ownerChecker = require('../middleware/ownerChecker')
 const User = require('../models/userModel')
 const Mess = require('../models/messModel')
+const Statistics = require('../models/statisticsModel');
+const roleChecker = require('../middleware/roleChecker')
 
 
-router.post('/', auth, async (req, res) => {
+router.post('/end', [auth,roleChecker], async (req, res) => {
+    try {
+        const overView = {}
+        overView.mealCost = req.mess.mealCost;
+        overView.totalMeal = req.mess.totalMeal;
+        overView.totalExpense = req.mess.totalExpense;
+        const dates=await req.mess.generateDateList();
+        overView.startDate=dates[0];
+        overView.endDate=dates[dates.length-1];
+        await req.mess.endMonthForMess();
+        await User.endMonthForMembers(req.mess._id);
+        
+        const stat=new Statistics({
+            messID:req.mess._id,
+            overView,
+
+        })
+        await stat.save();        
+        res.send(
+            overView
+        )
+
+    } catch (e) {
+        error = e.message;
+        res.send({ error });
+
+    }
+})
+
+router.post('/generate-stats', auth, async(req, res) => {
+    try {
+        const stats= await Statistics.find({messID: req.mess._id});
+        res.send(stats);
+    } catch (e) {   
+        error=e.message;
+        res.send({error});
+    }
+})
+
+router.post('/settle-expense', auth, async (req, res) => {
     try {
         const allUser = await Mess.find({ _id: req.mess._id }).populate('members')
         const users = allUser[0].members.filter(() => true);
@@ -21,22 +62,9 @@ router.post('/', auth, async (req, res) => {
             user.balance = element.expense - (element.totalMeal * req.mess.mealCost)
 
             if (user.balance >= 0) {
-                // console.log({
-                //     expense: element.expense,
-                //     totalMeal: element.totalMeal,
-                //     mealCost: req.mess.mealCost,
-                //     balance: user.balance
-                // })
                 positiveBalance = positiveBalance.concat(user)
 
             } else {
-
-                // console.log({
-                //     expense: element.expense,
-                //     totalMeal: element.totalMeal,
-                //     mealCost: req.mess.mealCost,
-                //     balance: user.balance
-                // })
                 negativeBalance = negativeBalance.concat(user)
             }
         })
@@ -87,6 +115,3 @@ router.post('/', auth, async (req, res) => {
 })
 
 module.exports = router;
-
-
-

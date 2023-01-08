@@ -68,9 +68,5 @@ router.post('/balance',auth,async(req,res)=>{
 })
 
 
-router.post('/howtosettle',auth,async(req,res)=>{
-    
-})
-
 
 module.exports = router;
